@@ -5,7 +5,8 @@ ActiveRecord::Base.logger = nil
 if ENV["TEST_DATABASE_URL"].to_s != ""
   OTR::ActiveRecord.configure_from_url!(ENV["TEST_DATABASE_URL"])
 else
-  OTR::ActiveRecord.configure_from_hash!(adapter: 'sqlite3', database: ':memory:', encoding: 'utf8', pool: 5, timeout: 5000)
+  ENV["RACK_ENV"] = "test"
+  OTR::ActiveRecord.configure_from_file!(File.expand_path("../database.yml", __FILE__))
 end
 OTR::ActiveRecord.establish_connection!
 

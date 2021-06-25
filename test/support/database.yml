@@ -1,6 +1,14 @@
 test:
-  adapter: sqlite3
-  database: ":memory:"
-  encoding: utf8
-  pool: 5
-  timeout: 5000
+  main:
+    adapter: sqlite3
+    database: ":memory:"
+    encoding: utf8
+    pool: 5
+    timeout: 5000
+
+  main_replica:
+    adapter: sqlite3
+    database: ":memory:"
+    encoding: utf8
+    pool: 5
+    timeout: 5000

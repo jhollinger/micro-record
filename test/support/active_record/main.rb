@@ -1,3 +1,7 @@
+class ActiveRecord::Base
+  connects_to database: { writing: :main, reading: :main }
+end
+
 ActiveRecord::Base.connection.instance_eval do
   drop_table :categories if table_exists? :categories
   create_table :categories do |t|

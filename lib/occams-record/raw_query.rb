@@ -76,11 +76,12 @@ module OccamsRecord
     # @param query_logger [Array] (optional) an array into which all queries will be inserted for logging/debug purposes
     # @param measurements [Array]
     #
-    def initialize(sql, binds, use: nil, eager_loaders: nil, query_logger: nil, measurements: nil)
+    def initialize(sql, binds, use: nil, eager_loaders: nil, role: nil, query_logger: nil, measurements: nil)
       @sql = sql
       @binds = binds
       @use = use
       @eager_loaders = eager_loaders || EagerLoaders::Context.new
+      @db_role = role
       @query_logger, @measurements = query_logger, measurements
     end
 
@@ -92,10 +93,12 @@ module OccamsRecord
     # aren't doing eager loading.
     #
     # @param klass [ActiveRecord::Base]
+    # @param role [Symbol] Database role to connect to on klass (optional)
     # @return [OccamsRecord::RawQuery] self
     #
-    def model(klass)
+    def model(klass, role = nil)
       @eager_loaders.model = klass
+      @db_role = role
       self
     end
 
